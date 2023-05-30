@@ -1,26 +1,63 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Flex,
+  HStack,
+  Heading,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { tasks } from "../../data/db";
+import { EditIcon, ViewIcon } from "@chakra-ui/icons";
 
 export default function Dashboard() {
-  const btnStyles = {
-    my: "1rem",
-    p: "1rem",
-    bg: "blue.400",
-    color: "white",
-    letterSpacing: "0.15rem",
-    textAlign: "center",
-    transition: "0.3s ease-in-out all",
-    ":hover": {
-      bg: "blue.700",
-      letterSpacing: "0.25rem",
-    },
-  };
   return (
     <>
-      <Container>
-        <Heading as="h1">Chackra UI</Heading>
-        <Text>Normal Text to go with Chakra UI. I am learning Chakra UI</Text>
-        <Box sx={btnStyles}>This is a BOX</Box>
-      </Container>
+      <SimpleGrid spacing="1rem" minChildWidth="300px">
+        {tasks &&
+          tasks.map((task) => {
+            return (
+              <Card
+                key={task.id}
+                borderTop="8px"
+                borderColor="blue.400"
+                bg="white">
+                <CardHeader>
+                  <Flex>
+                    <Box w="50px" h="50px">
+                      AV
+                    </Box>
+                    <Box>
+                      <Heading as="h3" size="sm">
+                        {task.title}
+                      </Heading>
+                      <Text>by {task.author}</Text>
+                    </Box>
+                  </Flex>
+                </CardHeader>
+                <CardBody color="gray.500">
+                  <Text>{task.description}</Text>
+                </CardBody>
+                <Divider borderColor="gray.300" />
+                <CardFooter>
+                  <HStack>
+                    <Button variant="ghost" leftIcon={<ViewIcon />}>
+                      Watch
+                    </Button>
+                    <Button variant="ghost" leftIcon={<EditIcon />}>
+                      Comment
+                    </Button>
+                  </HStack>
+                </CardFooter>
+              </Card>
+            );
+          })}
+      </SimpleGrid>
     </>
   );
 }
